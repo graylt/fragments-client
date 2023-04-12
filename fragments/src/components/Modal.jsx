@@ -1,4 +1,4 @@
-const Modal = (props, book) => {
+const Modal = (props, fragment) => {
 
     if (!props.show) {
         return null

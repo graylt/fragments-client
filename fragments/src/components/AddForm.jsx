@@ -23,7 +23,7 @@ const Add = (props) => {
     setFragment({...fragment, [event.target.name]: event.target.value})
   }
 
-  //submit for adding a new book
+  //submit for adding new
   const handleSubmit = (event) => {
     event.preventDefault()
     props.handleCreate(fragment)
@@ -84,7 +84,7 @@ const Add = (props) => {
                     </label>
                 <input 
                 type='text' 
-                name='publisher' 
+                name='short' 
                 value={fragment.short} 
                 onChange={handleChange}/>
                 <br/>

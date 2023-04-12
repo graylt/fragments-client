@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import EditForm from './EditForm';
 import Modal from './Modal';
 
 const Edit = (props) => {
@@ -15,7 +14,7 @@ const Edit = (props) => {
     setFragment({...fragment, [event.target.name]: event.target.value})
   }
 
-  //submit for adding a new book
+  //submit for adding new
   const handleSubmit = (event) => {
     event.preventDefault()
     props.handleUpdate(fragment)
@@ -80,7 +79,7 @@ const Edit = (props) => {
                     </label>
                 <input 
                 type='text' 
-                name='publisher' 
+                name='short' 
                 value={fragment.short} 
                 onChange={handleChange}/>
                 <br/>
@@ -141,7 +140,8 @@ const Edit = (props) => {
                 <br/>
                 <br/>
                 <div className='add-submit-btn-div'>
-                  <input type='submit'/>
+                <button type="button" class="btn btn-warning" onClick={e => handleSubmit(e)}>Edit</button>
+                  {/* <input type='submit'/> */}
                   <br/>
                 <br/>
                   <button

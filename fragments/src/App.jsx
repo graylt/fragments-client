@@ -50,7 +50,7 @@ const handleCreate = (addFragment) => {
 
 //update CMS
 const handleUpdate = (editFragment) => {
- axios.put(`https://fragmented.herokuapp.com/fragments/` + editFragment.id, editFragment)
+ axios.put(`https://fragmented.herokuapp.com/fragments/${id}` + editFragment.id, editFragment)
  .then((response) => {
    setFragments(fragments.map((fragment) => {
      return fragment.id !== response.data.id ? fragment : response.data
@@ -71,7 +71,7 @@ const handleUpdate = (editFragment) => {
 
 //delete CMS
 const handleDelete = (deletedFragment) => {
- axios.delete(`https://fragmented.herokuapp.com/fragments/` + deletedFragment.id)
+ axios.delete(`https://fragmented.herokuapp.com/fragments/${id}` + deletedFragment.id)
  // axios.delete('http://localhost:3000/:id' + deletedFragment.id)
  .then((response) => {
    setFragments(fragments.filter(fragment => fragment.id !== deletedFragment.id))
@@ -92,9 +92,9 @@ const handleDelete = (deletedFragment) => {
 
   useEffect(() => {
     getFragment()
-    axios.get(`https://fragmented.herokuapp.com/fragments`).then((response) => {
-      getPost(response.data)
-    })
+    // axios.get(`https://fragmented.herokuapp.com/fragments`).then((response) => {
+    //   getPost(response.data)
+    // })
   }, [])
 
   return (

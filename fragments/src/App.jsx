@@ -7,6 +7,12 @@ import AllFragments from './components/AllFragments';
 
 function App() {
 
+  // ------------------------------
+  // Database API URL Switch Heroku/Local
+  // ------------------------------
+  // const apiUrl = 'https://fragmented.herokuapp.com'
+  // const apiUrl = 'localhost:3000/fragments'
+
 const [fragments, setFragments] = useState([]) 
 
 // add modal
@@ -26,7 +32,7 @@ const [query, setQuery] = useState("")
 
 //route to get CMS
 const getFragment = () => {
-  axios.get('https://fragmented.herokuapp.com/')
+  axios.get(`https://fragmented.herokuapp.com/fragments`)
     //axios.get("http://localhost:3000/fragments")
     .then(response => setFragments(response.data),
         err => console.log(err)
@@ -35,36 +41,37 @@ const getFragment = () => {
 
 //create route for CMS
 const handleCreate = (addFragment) => {
- axios.post('https://fragmented.herokuapp.com/', addFragment)
+ axios.post(`https://fragmented.herokuapp.com/fragments/`, addFragment)
  .then((response) => {
-   setFragments([...fragments, response.data])
+  //  setFragments([...fragments, response.data])
+  getFragment()
  })
 }
 
 //update CMS
-// const handleUpdate = (editFragment) => {
-//  axios.put(`https://frag-ments.herokuapp.com/update/:id` + editFragment.id, editFragment)
-//  .then((response) => {
-//    setFragments(fragments.map((fragment) => {
-//      return fragment.id !== response.data.id ? fragment : response.data
-//    }))
-//  })
-// }
-
 const handleUpdate = (editFragment) => {
-  console.log(editFragment)
-  axios.put(`https://fragmented.herokuapp.com/:id` + editFragment.id, editFragment)
-  .then((response) => {
-    setFragments(fragments.map((fragment) => {
-      return fragment.id !== response.data.id ? fragment :
-      response.data
-    }))
-  })
+ axios.put(`https://fragmented.herokuapp.com/fragments/` + editFragment.id, editFragment)
+ .then((response) => {
+   setFragments(fragments.map((fragment) => {
+     return fragment.id !== response.data.id ? fragment : response.data
+   }))
+ })
 }
+
+// const handleUpdate = (editFragment) => {
+//   console.log(editFragment)
+//   axios.put(`${apiUrl}/fragments` + editFragment.id, editFragment)
+//   .then((response) => {
+//     setFragments(fragments.map((fragment) => {
+//       return fragment.id !== response.data.id ? fragment :
+//       response.data
+//     }))
+//   })
+// }
 
 //delete CMS
 const handleDelete = (deletedFragment) => {
- axios.delete('https://fragmented.herokuapp.com/delete/' + deletedFragment.id)
+ axios.delete(`https://fragmented.herokuapp.com/fragments/` + deletedFragment.id)
  // axios.delete('http://localhost:3000/:id' + deletedFragment.id)
  .then((response) => {
    setFragments(fragments.filter(fragment => fragment.id !== deletedFragment.id))
@@ -74,13 +81,20 @@ const handleDelete = (deletedFragment) => {
 
 
 //Gets all data then loads page
+  // useEffect(() => {
+  //   getFragment()
+  //   axios
+  //   .get(' https://fragmented.herokuapp.com/fragments')
+  //       .then((response)=>{
+  //           console.log(response)
+  //       })
+  // }, [])
+
   useEffect(() => {
     getFragment()
-    axios
-    .get(' https://fragmented.herokuapp.com/fragments')
-        .then((response)=>{
-            console.log(response)
-        })
+    axios.get(`https://fragmented.herokuapp.com/fragments`).then((response) => {
+      getPost(response.data)
+    })
   }, [])
 
   return (

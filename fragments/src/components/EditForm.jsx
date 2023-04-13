@@ -2,6 +2,16 @@ import {useState} from 'react'
 import Modal from './Modal';
 
 const Edit = (props) => {
+    //--- State:
+    let emptyFragment = {
+      date: '', 
+      movie: '', 
+      short: '', 
+      tv_series: '', 
+      book: '', 
+      play: '', 
+      short_story: ''
+    }
 
 
   const [fragment, setFragment] = useState({...props.fragment})
@@ -15,16 +25,22 @@ const Edit = (props) => {
   }
 
   //submit for adding new
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   props.handleUpdate(fragment)
+  //   window.location.reload(false)
+  // }
   const handleSubmit = (event) => {
     event.preventDefault()
     props.handleUpdate(fragment)
-    window.location.reload(false)
   }
 
   const handleDeleteSubmit = (event) => {
     event.preventDefault()
     props.handleDelete(fragment)
   }
+
+
 
   return(
     <>
@@ -41,21 +57,9 @@ const Edit = (props) => {
                     onClose={() =>setShow(false)} 
                     show={show}
                     > 
-                    <form 
-                    className="add-input" 
-                    onSubmit={handleSubmit}
-                    >
-                    <label 
-                    htmlFor='date'
-                    >
-                    Date: 
-                    </label>
-                <input 
-                type='text' 
-                name='date' 
-                value={fragment.date} 
-                onChange={handleChange}
-                />
+                    <form className="add-input" onSubmit={handleSubmit}>
+                    <label htmlFor='date'>Date: </label>
+                <input type='text' name='date' value={fragment.date} onChange={handleChange}/>
                 <br/>
                 <br/>
 
@@ -140,8 +144,7 @@ const Edit = (props) => {
                 <br/>
                 <br/>
                 <div className='add-submit-btn-div'>
-                <button type="button" class="btn btn-warning" onClick={e => handleSubmit(e)}>Edit</button>
-                  {/* <input type='submit'/> */}
+                  <input type='submit'/>
                   <br/>
                 <br/>
                   <button

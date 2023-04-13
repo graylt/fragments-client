@@ -26,7 +26,7 @@ const [query, setQuery] = useState("")
 
 //route to get CMS
 const getFragment = () => {
-  axios.get('https://frag-ments.herokuapp.com/fragments')
+  axios.get('https://fragmented.herokuapp.com/')
     //axios.get("http://localhost:3000/fragments")
     .then(response => setFragments(response.data),
         err => console.log(err)
@@ -35,36 +35,49 @@ const getFragment = () => {
 
 //create route for CMS
 const handleCreate = (addFragment) => {
- axios.post('https://frag-ments.herokuapp.com/add', addFragment)
+ axios.post('https://fragmented.herokuapp.com/', addFragment)
  .then((response) => {
    setFragments([...fragments, response.data])
  })
 }
 
 //update CMS
+// const handleUpdate = (editFragment) => {
+//  axios.put(`https://frag-ments.herokuapp.com/update/:id` + editFragment.id, editFragment)
+//  .then((response) => {
+//    setFragments(fragments.map((fragment) => {
+//      return fragment.id !== response.data.id ? fragment : response.data
+//    }))
+//  })
+// }
+
 const handleUpdate = (editFragment) => {
- axios.put('https://frag-ments.herokuapp.com/update/:id' + editFragment.id, editFragment)
- .then((response) => {
-   setFragments(fragments.map((fragment) => {
-     return fragment.id !== response.data.id ? fragment : response.data
-   }))
- })
+  console.log(editFragment)
+  axios.put(`https://fragmented.herokuapp.com/:id` + editFragment.id, editFragment)
+  .then((response) => {
+    setFragments(fragments.map((fragment) => {
+      return fragment.id !== response.data.id ? fragment :
+      response.data
+    }))
+  })
 }
 
 //delete CMS
 const handleDelete = (deletedFragment) => {
- axios.delete('https://frag-ments.herokuapp.com/delete/:id' + deletedFragment.id)
- // axios.delete('http://localhost:3000/:id' + deletedProfile.id)
+ axios.delete('https://fragmented.herokuapp.com/delete/' + deletedFragment.id)
+ // axios.delete('http://localhost:3000/:id' + deletedFragment.id)
  .then((response) => {
    setFragments(fragments.filter(fragment => fragment.id !== deletedFragment.id))
  })
 }
 
+
+
 //Gets all data then loads page
   useEffect(() => {
     getFragment()
     axios
-    .get(' https://frag-ments.herokuapp.com/fragments')
+    .get(' https://fragmented.herokuapp.com/fragments')
         .then((response)=>{
             console.log(response)
         })
@@ -187,6 +200,7 @@ const handleDelete = (deletedFragment) => {
                     <div className="card" key = {fragment.id}>
                         <div className="read">
                             <AllFragments getFragment={getFragment} fragment={fragment}/>
+
                         </div>
                         <br/>
                         {/* <button
